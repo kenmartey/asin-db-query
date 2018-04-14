@@ -1,0 +1,46 @@
+{% load staticfiles %}
+{% block content %}
+<html>
+
+<head>
+    
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+</head>
+    <body>
+
+    <div class="col-md-6 col-md-offset-3">
+        <h4 class="panel-title">Please enter your ASIN number</h4>
+           <input type='hidden' id="csrf_token" name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
+          <input type="text" id="asin_number" class="form-control" placeholder="Enter your ASIN number">
+        </div>
+        <br>
+        <div class="form-group nomargin">
+          <button id="asin_search_btn" class="btn btn-success"> Search</button>
+        </div>
+      </div>
+</body>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+
+<script type="text/javascript">
+  $("#asin_search_btn").click(function(e) {
+    e.preventDefault();
+    var asin_number =  $('#asin_number').val();
+    var token =  $('#csrf_token').val();
+    $.ajax({
+    url: "/",
+    type: "POST", // http method
+      data: {
+        csrfmiddlewaretoken: token,
+        asin_number: asin_number
+        
+      }, // data sent with the post request
+    // handle a successful response
+      success: function(data) {
+        // alert("successfully unassigned fieldworker to this fault")
+      }
+  })
+});
+</script>
+</html>
+{% endblock %}
